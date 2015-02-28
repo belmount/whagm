@@ -41,7 +41,25 @@
 	})
 	.controller('DetailCtrl', function($scope, Data){
 		$scope.agency = Data.selectedAgency();
-		
+		$scope.showMap = function() {
+			var map;
+			var loc = $scope.agency.location;
+				map = new AMap.Map("mapContainer",{
+				resizeEnable: true,
+				//二维地图显示视口
+				view: new AMap.View2D({
+					center:new AMap.LngLat(loc.longtitude, loc.latitude),//地图中心点
+					zoom:13 //地图显示的缩放级别
+				})
+			});	
+
+			var marker = new AMap.Marker({				  
+				icon:"http://webapi.amap.com/images/marker_sprite.png",
+				position:new AMap.LngLat(loc.longtitude, loc.latitude)
+			});
+			marker.setMap(map);
+		});
+	
 	})
 	.filter('imgUrl', function(imgPath){
 		return function(img){

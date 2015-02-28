@@ -1,0 +1,24 @@
+<ons-page class="left" ng-controller='DetailCtrl'>
+	<ons-list>
+		<ons-list-item>
+		<h3>{{agency.bname}}</h3>
+	
+		<p><small>{{agency.address}}</small></p>
+		</ons-list-item>
+		<ons-list-item>
+		<p>{{agency.business_scope}}</p>
+	</ons-list-item>
+		</ons-list>
+		<ons-carousel style="height:200px" auto-scroll overscrollable>
+			<ons-carousel-item ng-repeat="img in agency.images" >
+			<div>
+				<img ng-src="{{img | imgUrl}}">
+				</img>
+			</div>
+		</ons-carousel-item>
+		</div>
+		</ons-carousel>
+	</ons-col>
+	</ons-row>
+	
+</ons-page>

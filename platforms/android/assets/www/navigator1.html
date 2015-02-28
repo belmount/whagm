@@ -1,0 +1,24 @@
+<ons-navigator title="机构" var='agencyNav'>
+<ons-list>
+	<ons-list-item>
+		<form ng-submit="searchByName(name)">
+			<ons-search-input placeholder="经纪机构名称" ng-model="name"/>
+		</form>
+	</ons-list-item>
+	<ons-list-item modifier="chevron" class="item" ng-repeat="a in agencies" ng-click="seeDetail($index)" align="left">
+	<ons-row>
+	<ons-col width='30%'>
+		<img ng-repeat="img in a.images|filter:mainImg" ng-src="{{img | imgUrl}}" style='width:80'></img></ons-col>
+	<ons-col width='70%'>
+		<p>
+                  <strong>{{a.bname}}</strong>
+                </p>
+                <p class="item-desc"><small>{{a.address}}<small></p>
+</ons-col>
+</ons-row>
+                
+                
+    </ons-list-item>
+
+</ons-list>
+</ons-navigator>

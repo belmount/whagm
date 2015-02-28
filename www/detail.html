@@ -1,24 +1,30 @@
 <ons-page class="left" ng-controller='DetailCtrl'>
-	<ons-list>
-		<ons-list-item>
-		<h3>{{agency.bname}}</h3>
-	
-		<p><small>{{agency.address}}</small></p>
-		</ons-list-item>
-		<ons-list-item>
-		<p>{{agency.business_scope}}</p>
-	</ons-list-item>
-		</ons-list>
-		<ons-carousel style="height:200px" auto-scroll overscrollable>
-			<ons-carousel-item ng-repeat="img in agency.images" >
-			<div>
-				<img ng-src="{{img | imgUrl}}">
-				</img>
-			</div>
-		</ons-carousel-item>
-		</div>
-		</ons-carousel>
-	</ons-col>
-	</ons-row>
+		<ons-list>
+			<ons-list-item>
+				<h3>{{agency.bname}}</h3>
+		
+			<p><small>{{agency.address}}</small></p>
+			 <div class="desc">
+            经营范围：{{agency.business_scope}}
+        </div>
+			</ons-list-item>
+		 <ons-list-item modifier="chevron" class="list-item-container" ng-repeat="img in agency.images">
+      <ons-row>
+        <ons-col width="120px">
+          <img src="{{img | imgUrl}}" class="thumbnail">
+        </ons-col>
+        <ons-col-offset-10>
+          <div class="desc">
+            {{img.image_name}}
+          </div>
+        </ons-col>
+        <ons-col width="40px"></ons-col>
+      </ons-row>
+    </ons-list-item>
+    <ons-list-item id="mapContainer">
+    </ons-list-item>
+    <ons-button ng-click='showMap()'>Map</ons-button>
+    </ons-list>
+
 	
 </ons-page>
