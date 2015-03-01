@@ -1,4 +1,4 @@
-<ons-navigator title="机构" var='agencyNav'>
+<ons-navigator title="机构" ng-controller="AppCtrl" var='agencyNav' right-button-icon="fa fa-lg fa-map-marker"  on-right-button-click="locSearch()">
 <ons-list>
 	<ons-list-item>
 		<form ng-submit="searchByName(name)">

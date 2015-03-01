@@ -21,10 +21,16 @@
         <ons-col width="40px"></ons-col>
       </ons-row>
     </ons-list-item>
-    <ons-list-item id="mapContainer">
+    <ons-list-item ng-click='showMap()'modifier="chevron">
+          <ons-row>
+        <ons-col width="120px">
+         <ons-icon icon="map-marker" size="100px"></ons-icon>
+        </ons-col>
+        <ons-col-offset-10>
+          地图
+        </ons-col>
+        <ons-col width="40px"></ons-col>
+      </ons-row>
     </ons-list-item>
-    <ons-button ng-click='showMap()'>Map</ons-button>
-    </ons-list>
-
-	
+    </ons-list>	
 </ons-page>
