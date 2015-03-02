@@ -1,11 +1,13 @@
 (function(){
 	'use strict';
-	var app = angular.module('myApp', ['onsen.directives']);
+	var deviceReady = false;
+	var app = angular.module('myApp', ['onsen.directives', 'ngCordova']);
 	app
-	.constant('searchNameUrl', 'http://localhost:9292/jjjg.027xf.com/agency/show_by_name.json?utf8=%E2%9C%93&name=')
-	.constant('locSearchUrl', 'http://localhost:9292/jjjg.027xf.com/home/search.json?limit=5&intermediate=%E5%B1%85%E9%97%B4&proxy=%E4%BB%A3%E7%90%86')
-	//.constant('searchNameUrl', 'http://jjjg.027xf.com/agency/show_by_name.json?utf8=%E2%9C%93&name=')
-	.controller('AppCtrl', function($scope, searchNameUrl, $http, mainImgType, imgPath, Data, locSearchUrl) {
+	//.constant('searchNameUrl', 'http://localhost:9292/jjjg.027xf.com/agency/show_by_name.json?utf8=%E2%9C%93&name=')
+	//.constant('locSearchUrl', 'http://localhost:9292/jjjg.027xf.com/home/search.json?limit=5&intermediate=%E5%B1%85%E9%97%B4&proxy=%E4%BB%A3%E7%90%86')
+	.constant('searchNameUrl', 'http://jjjg.027xf.com/agency/show_by_name.json?utf8=%E2%9C%93&name=')
+	.constant('locSearchUrl', 'http://jjjg.027xf.com/home/search.json?limit=5&intermediate=%E5%B1%85%E9%97%B4&proxy=%E4%BB%A3%E7%90%86')
+	.controller('AppCtrl', function($scope, searchNameUrl, $http, mainImgType, imgPath, Data, locSearchUrl, $cordovaGeolocation) {
 		var onSearchSuccess = function(data){
 				$scope.agencies = data;
 					
@@ -23,10 +25,28 @@
 		}
 
 		$scope.locSearch = function(){
-			var locStr = '&from_lat=30.593087&from_lng=114.305357';
-			$http.get(locSearchUrl+locStr)
-			.success(onSearchSuccess)
-			.error(onSearchError);
+			if (deviceReady) {
+				var posOptions = {timeout: 10000, enableHighAccuracy: true};
+			  $cordovaGeolocation
+			    .getCurrentPosition(posOptions)
+			    .then(function (position) {
+			      var lat  = position.coords.latitude;
+			      var long = position.coords.longitude;
+			      alert('postion get')
+			      //var locStr = '&from_lat=30.593087&from_lng=114.305357';
+			      var locStr = '&from_lat='+ lat+'&from_lng=' + long;
+						$http.get(locSearchUrl+locStr)
+						.success(onSearchSuccess)
+						.error(onSearchError);
+			    }, function(err) {
+			      // error
+			      alert(err)
+			      alert('无法获取位置信息')
+			    });
+
+			} else {
+				alert('设备尚未准备');
+			}
 		}
 
 		$scope.mainImg = function(img) {
@@ -83,5 +103,11 @@
 			return imgPath + img.guid;
 		}
 	})
+
+	// cordova related
+	document.addEventListener('deviceready', onDeviceReady, false);
+	function onDeviceReady(){
+		deviceReady = true;
+	}
 
 })();
